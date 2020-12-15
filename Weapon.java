@@ -1,3 +1,7 @@
+// jpluu
+// Weapon object
+// Weapon is an Item object that has 'weapon' stats
+// attacking is also done here but should be redone as an interface
 import java.util.Random;
 
 public class Weapon extends Item{
@@ -8,6 +12,7 @@ public class Weapon extends Item{
     public int speed;
     private Random weaponRNG = new Random();
 
+    // constructors
     public Weapon() {
         super("null", 1);
         this.level = 0;
@@ -26,42 +31,62 @@ public class Weapon extends Item{
         this.speed = speed;
     }
 
+    // helpers
+    // attack - takes in an enemy to attack
+    // some weapons are faster than other, allowing for more attacks
+    // if in range, there will be an attack attempt
+    // if accuracy is greater than the random double generated, attack will occur, otherwise miss
     public void attack(Player enemy) {
         double damageCalc;
         int attack = 0;
+        // multi attack loop
         while (attack < speed) {
+            // in range?
             if (inRange(enemy.getDistance())) {
+                // accuracy checker
                 if (accuracy >= weaponRNG.nextDouble()) {
                     damageCalc = this.damage;
+                    // for firearm and explosive, weapons that have ammo
                     if (super.isConsumable() && super.getQuantity() > 0) {
                         super.use();
                         damageCalc += Math.pow(this.damage, (1 + (weaponRNG.nextDouble() * this.level)));
-                    } else if(super.isConsumable() && super.getQuantity() == 0) {
+                    }
+                    // out of ammo
+                    else if(super.isConsumable() && super.getQuantity() == 0) {
                         System.out.println("Out of ammo!");
                         break;
-                    } else {
+                    }
+                    // melee weapons
+                    else {
                         damageCalc += Math.pow(this.damage, (1 + (weaponRNG.nextDouble() * this.level)));
                     }
+                    // damage calculations
                     System.out.println(this.name + " did " + Math.ceil(damageCalc) + " damage to " + enemy.name);
                     enemy.playerHP -= Math.ceil(damageCalc);
-                }else {
+                }
+                // missed
+                else {
                     System.out.println(this.name + " missed!");
                     break;
                 }
             }
+            // increase multi attack counter
             attack++;
         }
 
     }
-    
+
+    // upgrade - upgrade the level of the weapon by one
     public void upgrade() {
         this.level += 1;
     }
 
+    // inRange - checks if the target is in range
     public boolean inRange(double distance) {
         return distance <= this.range;
     }
 
+    // toString
     @Override
     public String toString() {
         return "Weapon{" +

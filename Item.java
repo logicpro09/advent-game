@@ -53,6 +53,7 @@ public class Item {
 
     // use - if an item can be use and has quantity left
     // returns a boolean if the item is used
+    // possible breakout to interface
     public boolean use() {
         if (consumable && this.quantity > 0) {
             this.quantity -= 1;
