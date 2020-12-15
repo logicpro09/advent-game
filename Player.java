@@ -1,3 +1,5 @@
+// jpluu
+// reworked Player object to include OOP and the Item objects for the inventory
 public class Player {
     String name;
     int playerHP;
@@ -8,6 +10,7 @@ public class Player {
     String description;
     public double distance;
 
+    // if class is civilian
     public void civilianSetup(String name) {
         this.name = name;
         this.playerHP = 15;
@@ -17,6 +20,7 @@ public class Player {
         this.description = "You cannot defend yourself, but you have a phone\nYou are an average Joe who is afraid of things most people are afraid of, like conflict, zombies, and communism";
     }
 
+    // if class is hobo
     public void hoboSetup(String name) {
         this.name = name;
         this.playerHP = 25;
@@ -26,6 +30,7 @@ public class Player {
         this.description = "You have some sticks to defend yourself, and some scavenged food to keep you alive\nYour life on the streets has made you tougher and stinkier than most";
     }
 
+    // if class is businessman
     public void businessmanSetup(String name) {
         this.name = name;
         this.playerHP = 20;
@@ -35,6 +40,7 @@ public class Player {
         this.description = "You have purchased a firearm in order to stay safe on the streets, but pray you should not be forced to use it\nYour cozy city life has made you fearful and cautious of the lower income communities";
     }
 
+    // default enemy creation - moved to new class
     public void enemySetup(String name) {
         this.name = name;
         this.playerHP = 50;
@@ -43,6 +49,7 @@ public class Player {
         this.secondaryWeapon = null;
     }
 
+    // helper
     public double getDistance() {
         return distance;
     }
@@ -57,6 +64,10 @@ public class Player {
     }
 
 
+
+    // main method for testing Player and Ememy creation
+    // also has a battle test between civi and default Enemy
+    // prints out info of the civi and the enemy before and after combat
     public static void main(String[] args) {
         Player civiTest = new Player();
         civiTest.civilianSetup("Civi Test");
